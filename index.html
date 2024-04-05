@@ -1,0 +1,32 @@
+<!-- templates/index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz SAPPP</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+
+</head>
+
+<body>
+    <h1> SAPPP 2024 </h1>
+    
+    <div class="container"> </div>
+        <div class="quadro">
+            <div id="question">{{ question }}</div>
+             <div id="answer": style="display: none;"> {{ answer }}></div>              
+        </div>
+    <button id="show-answer">Modo de Avaliar</button>
+    <button onclick="window.location.href = '/pdfs/referencias.pdf';">Referencias</button>
+    <a href='/templates/index2.html' target="_blank">Acessar Arquivos</a>
+
+    <script>
+        document.getElementById('show-answer').onclick = function() {
+            var answerDiv = document.getElementById('answer');
+            answerDiv.style.display = 'flex';
+
+        };
+    </script>
+</body>
+</html>
