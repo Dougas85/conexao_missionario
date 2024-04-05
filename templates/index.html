@@ -1,0 +1,75 @@
+<!-- templates/index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/style.css') }}"> 
+<h1> Quem quer ser um missionário </h1>
+</head>
+<body>
+    <div id="question-container"></div>
+    <button onclick="nextQuestion()">Proxima Questão</button>
+    <div id="result"></div>
+    
+    <script>
+        src="{{ url_for('static', filename='script.js') }}"
+        let currentQuestionId = 0;
+
+        function loadQuestion() {
+            fetch('/question')
+            .then(response => response.json())
+            .then(data => {
+                if(data.end) {
+                    document.getElementById('question-container').innerText = 'Quiz Finalizado!';
+                    document.getElementById('result').innerText = '';
+                } else {
+                    currentQuestionId = data.id;
+                    let html = `<legend>${data.question}</legend>`;
+                    data.options.forEach(option => {
+                        html += `<div><input type="radio" name="answer" value="${option}"><label>${option}</label></div>`;
+                    });
+                    document.getElementById('question-container').innerHTML = html;
+                }
+            });
+        }
+
+        function nextQuestion() {
+            const options = document.getElementsByName('answer');
+            let selectedOption;
+            options.forEach(option => {
+                if(option.checked) {
+                    selectedOption = option.value;
+                }
+            });
+
+            if(selectedOption) {
+                fetch('/check_answer', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({answer: selectedOption, question_id: currentQuestionId}),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if(data.correct) {
+                        document.getElementById('result').innerText = 'Correto!';
+                        loadQuestion(); // Carrega a próxima pergunta
+                    } else {
+                        document.getElementById('result').innerText = 'Incorreto. Resposta errada.';
+                    }
+                });
+            } else {
+                document.getElementById('result').innerText = 'Parabéns, você já pode ser um missionário.';
+            }
+        }
+
+        loadQuestion(); // Inicia o quiz carregando a primeira pergunta
+
+
+    
+    </script>
+</body>
+</html>
