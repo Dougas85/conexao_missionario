@@ -12,70 +12,10 @@
 <h1> Quem quer ser um missionário </h1>
 </head>
 <body>
-    <script src"quiz.js"></script>
     <div id="question-container"></div>
     <button onclick="nextQuestion()">Proxima Questão</button>
     <div id="result"></div>
-<script>
-        let currentQuestionIndex = 0;
-        let score = 0;
-        const questions = [
-            { id: 1, question: "Quem foi o rei mais jovem a reinar em Jerusalém?", options: ["Salomão", "Joás", "Josias", "Acaz"], correct: "Joás" },
-            { id: 2, question: "Qual discípulo andou sobre a água com Jesus?", options: ["Pedro", "João", "Tiago", "Judas"], correct: "Pedro" },
-            { id: 3, question: "Quem interpretou o sonho do Faraó, prevendo sete anos de abundância seguidos por sete anos de fome?", options: ["Moisés", "Abraão", "José", "Daniel"], correct: "José" },
-            // Adicione mais perguntas conforme necessário...
-        ];
-
-        document.addEventListener('DOMContentLoaded', () => {
-            displayQuestion();
-        });
-
-        function displayQuestion() {
-            const question = questions[currentQuestionIndex];
-            if(question) {
-                const container = document.getElementById('question-container');
-                container.innerHTML = `<legend>${question.question}</legend>
-                ${question.options.map((option, index) => `
-                    <div>
-                        <input type="radio" name="answer" id="option${index}" value="${option}">
-                        <label for="option${index}">${option}</label>
-                    </div>
-                `).join('')}`;
-                document.getElementById('result').textContent = '';
-            } else {
-                showResults();
-            }
-        }
-
-        function submitAnswer() {
-            const selectedOption = document.querySelector('input[name="answer"]:checked')?.value;
-            if (!selectedOption) {
-                alert('Por favor, selecione uma opção.');
-                return;
-            }
-
-            const question = questions[currentQuestionIndex];
-            if(selectedOption === question.correct) {
-                score++;
-                document.getElementById('result').textContent = 'Correto!';
-            } else {
-                document.getElementById('result').textContent = 'Incorreto.';
-            }
-
-            currentQuestionIndex++;
-            if (currentQuestionIndex < questions.length) {
-                displayQuestion();
-            } else {
-                showResults();
-            }
-        }
-
-        function showResults() {
-            const container = document.getElementById('question-container');
-            container.innerHTML = `<p>Seu score é ${score} de ${questions.length}.</p>`;
-            document.getElementById('next-btn').style.display = 'none';
-        }
-</script>
+<script src"quiz.js"></script>
 
 </body>
 </html>
