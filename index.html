@@ -17,8 +17,9 @@
     <button onclick="nextQuestion()">Proxima Questão</button>
     <div id="result"></div>
     
+    
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
     <script>
-        src="{{ url_for('static', filename='script.js') }}"
         let currentQuestionId = 0;
 
         function loadQuestion() {
