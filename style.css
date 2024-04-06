@@ -1,0 +1,72 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+    font-size: 40px;
+    /* static/styles/style.css */
+
+
+    background-image: url('./imagens/Image.jpg');
+    background-size: cover; /* Cobrir toda a página */
+    background-position: center; /* Centralizar a imagem de fundo */
+    
+}
+#question-container {
+    display:flexbox;
+        justify-content:space-between: center;
+        font-family: Comic Sans MS, sans-serif;
+        font-size: 40px;
+        text-align: center;
+        color:black;
+        line-height: 50px;
+        
+
+}
+
+button{
+    font-size: 32px;
+    padding: 10px 20px;
+    border: 0;
+    border-radius: 15px;
+    color: white;
+    font-family: 400;
+    background: linear-gradient(to right, blueviolet, rgb(255, 123, 0));
+    cursor: pointer;
+    justify-content: center;
+    height: auto;
+
+}
+
+button:hover{
+    animation-name: botao;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: ease-in-out;
+    box-shadow: 0 0 50px 20px rgba(255, 166, 0, 0.5);
+
+
+}
+@keyframes botao{
+    0%{
+        transform: scale(1);
+
+    }
+    100%{
+        transform: scale(1.05);
+    }
+
+}
+
+
+
+h1 {
+    color: rgb(56, 3, 3);
+    font-size: 40px;
+    
+}
+
+button {
+    margin-top: 40px;
+}
+
