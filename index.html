@@ -21,56 +21,56 @@
     <script src="{{ url_for('static', filename='script.js') }}"></script>
     <script>
         let currentQuestionId = 0;
-let totalAcertos = 0;
-const totalQuestoes = 5; // Supondo que existam 5 questões. Ajuste conforme necessário.
+        let totalAcertos = 0;
+        const totalQuestoes = 10; // Supondo que existam 5 questões. Ajuste conforme necessário.
 
-function loadQuestion() {
-    fetch('/question')
-    .then(response => response.json())
-    .then(data => {
-        if(data.end) {
-            document.getElementById('question-container').innerText = 'Quiz Finalizado!';
-            document.getElementById('result').innerText = '';
-            if (totalAcertos === totalQuestoes) {
-                document.getElementById('result').innerText = 'Parabéns, você já pode ser um missionário.';
-            }
-        } else {
-            currentQuestionId = data.id;
-            let html = `<legend>${data.question}</legend>`;
-            data.options.forEach(option => {
-                html += `<div><input type="radio" name="answer" value="${option}"><label>${option}</label></div>`;
+        function loadQuestion() {
+            fetch('/question')
+            .then(response => response.json())
+            .then(data => {
+                if(data.end) {
+                    document.getElementById('question-container').innerText = 'Quiz Finalizado!';
+                    document.getElementById('result').innerText = '';
+                    if (totalAcertos === totalQuestoes) {
+                        document.getElementById('result').innerText = 'Parabéns, você já pode ser um missionário.';
+                    }
+                } else {
+                    currentQuestionId = data.id;
+                    let html = `<legend>${data.question}</legend>`;
+                    data.options.forEach(option => {
+                        html += `<div><input type="radio" name="answer" value="${option}"><label>${option}</label></div>`;
+                    });
+                    document.getElementById('question-container').innerHTML = html;
+                }
             });
-            document.getElementById('question-container').innerHTML = html;
-        }
-    });
-}
+    }
 
-function nextQuestion() {
-    const options = document.getElementsByName('answer');
-    let selectedOption;
-    options.forEach(option => {
-        if(option.checked) {
-            selectedOption = option.value;
-        }
-    });
+    function nextQuestion() {
+        const options = document.getElementsByName('answer');
+        let selectedOption;
+        options.forEach(option => {
+            if(option.checked) {
+                selectedOption = option.value;
+            }
+        });
 
-    if(selectedOption) {
-        fetch('/check_answer', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({answer: selectedOption, question_id: currentQuestionId}),
-        })
-        .then(response => response.json())
-        .then(data => {
-            if(data.correct) {
-                totalAcertos += 1; // Incrementa o total de acertos
-                document.getElementById('result').innerText = 'Correto!';
-                loadQuestion(); // Carrega a próxima pergunta
-            } else {
-                document.getElementById('result').innerText = 'Errado.';
-                loadQuestion(); // Considerando que você deseja continuar o quiz mesmo após uma resposta errada
+        if(selectedOption) {
+            fetch('/check_answer', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({answer: selectedOption, question_id: currentQuestionId}),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.correct) {
+                    totalAcertos += 1; // Incrementa o total de acertos
+                    document.getElementById('result').innerText = 'Correto!';
+                    loadQuestion(); // Carrega a próxima pergunta
+                } else {
+                    document.getElementById('result').innerText = 'Errado.';
+                    loadQuestion(); // Considerando que você deseja continuar o quiz mesmo após uma resposta errada
             }
         });
     }
