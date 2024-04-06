@@ -53,6 +53,7 @@ label {
             { id: 3, question: "Quem interpretou o sonho do Faraó, prevendo sete anos de abundância seguidos por sete anos de fome?", options: ["Moisés", "Abraão", "José", "Daniel"], correct: "José" },
             // Adicione mais perguntas conforme necessário...
         ];
+
         function displayQuestion() {
             const question = questions[currentQuestionIndex];
             if(question) {
@@ -69,12 +70,14 @@ label {
                 showResults();
             }
         }
+
         function nextQuestion() {
             const selectedOption = document.querySelector('input[name="answer"]:checked')?.value;
             if (!selectedOption) {
                 alert('Por favor, selecione uma opção.');
                 return;
             }
+
             const question = questions[currentQuestionIndex];
             if(selectedOption === question.correct) {
                 score++;
@@ -82,6 +85,7 @@ label {
             } else {
                 document.getElementById('result').textContent = 'Incorreto.';
             }
+
             currentQuestionIndex++;
             if (currentQuestionIndex < questions.length) {
                 displayQuestion();
@@ -89,14 +93,16 @@ label {
                 showResults();
             }
         }
+
         function showResults() {
             const container = document.getElementById('question-container');
             container.innerHTML = `<p>Seu score é ${score} de ${questions.length}.</p>`;
             document.getElementById('next-btn').style.display = 'none';
         }
+
         document.addEventListener('DOMContentLoaded', () => {
             displayQuestion();
         });
-</script>
+    </script>
 </body>
 </html>
