@@ -6,7 +6,7 @@ body {
     /* static/styles/style.css */
 
 
-    background-image: url('Image.jpg');
+    background-image: url("Image.jpg");
     background-size: cover; /* Cobrir toda a página */
     background-position: center; /* Centralizar a imagem de fundo */
     
